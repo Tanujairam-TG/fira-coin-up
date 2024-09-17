@@ -1,0 +1,5 @@
+name: my-python-app
+description: A Python application deployed on Koyeb
+runtime: python3.9
+build:
+  dockerfile: Dockerfile
