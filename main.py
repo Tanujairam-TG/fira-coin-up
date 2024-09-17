@@ -1,16 +1,13 @@
-import os
 import requests
-import webbrowser
 import base64
 import json
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad, unpad
+from Crypto.Util.Padding import pad
 import NamasteAes
 import threading
 import time
 
 # Constants
-PASSWORD_URL = 'https://pastebin.com/raw/cGFrRgCV'
 KEY = bytes.fromhex('83108793d2e582de26095e6365006b683549db8300bac461d36fb6e4c27f2dbd')
 IV = bytes.fromhex('51afa8b2e0a47a37881424fb9b88b8bc')
 TOKEN = '5de3db1526d972d25e666bdac92865e8'
@@ -21,15 +18,6 @@ SESSION_BYTES = SESSION_STR.encode('utf-8')
 ENC_BYTES = base64.b64encode(SESSION_BYTES)
 ENC_STR = ENC_BYTES.decode('utf-8')
 SES = ENC_STR
-
-def fetch_password():
-    try:
-        response = requests.get(PASSWORD_URL)
-        response.raise_for_status()
-        return response.text.strip()
-    except requests.RequestException as e:
-        print(f"Error fetching password: {e}")
-        exit()
 
 def Coinlike(target_id, user_pk):
     url_coin = "https://firafollower.xyz/api/v4/coin.php"
@@ -250,9 +238,6 @@ def HHCOMMENT():
         time.sleep(3)  # Adjust sleep time as needed
 
 def main():
-    # Fetch password and other initialization if necessary
-    fetch_password()
-
     # Start threads for each function
     threading.Thread(target=HHLIKE, daemon=True).start()
     threading.Thread(target=HHFOL, daemon=True).start()
