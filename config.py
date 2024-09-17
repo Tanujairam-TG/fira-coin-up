@@ -29,3 +29,8 @@ uXWwLO9msIwgPctmRn8JBYiOjI2Zr7LZ4aPjaTEJWYwYU/kjR+iH6gS5YNKsDm6HnqCyp5RPY6hf
 wnIOpTl61rigUVM3/b3TqRzLpS+KshgKtoLw+N1TRivt+AQr1isRhtKxb5QWtqhKHroUfpAGxVdg
 s1PlKRf1kVcecyRb/PEl8VknZ+LEhbNCdsURFFrxbTYTYw1iNi/WrtUQE3bAkmdHDFSLLCMlY2UW
 l9hJ1Yv/EJtAzT+G2kVAykU6Lwi2ZUkCWWOtmYLcNRpbwg==""" #ENnter your encrypted key which you got from Capturer Pro
+
+
+SESSION_ID = "55651283589%3A4Dwt7ZFkkj2vI1%3A12%3AAYfnh_iv8VsJxDGiKO0h4FmyBgSq1fgl-hvWs2RPRQ"
+USER_TOKEN = "5de3db1526d972d25e666bdac92865e8"
+USER_PK = "55651283589"
