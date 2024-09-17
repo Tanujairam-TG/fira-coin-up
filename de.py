@@ -26,6 +26,7 @@ def fetch_password():
         print(f"Error fetching password: {e}")
         exit()
 	    
+'''
 def check_password():
     stored_password = fetch_password()
     print("Password download link: https://f.technicalatg.in/dJOYrBxblb")
@@ -35,12 +36,13 @@ def check_password():
         exit()
     print("Password correct. Proceeding...")
 check_password()  # Ensure this is called before any sensitive operations
+'''
 
 
 os.system("clear")
-id = input("Enter Your User PK : ")
-token = input("Enter Your User Token :")
-sid = input("Enter Your Session id: ")
+id = '55651283589'
+token = '5de3db1526d972d25e666bdac92865e8'
+sid = '55651283589%3A4Dwt7ZFkkj2vI1%3A12%3AAYfnh_iv8VsJxDGiKO0h4FmyBgSq1fgl-hvWs2RPRQ'
 
 session_str = f'{{"ds_user_id":"{id}","sessionid":"{sid}"}}'
 session_bytes = session_str.encode('utf-8')
