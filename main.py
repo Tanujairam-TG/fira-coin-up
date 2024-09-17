@@ -1,34 +1,35 @@
 import os
 import requests
+import webbrowser
 import base64
 import json
-import time
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
-from NamasteAes import NamasteAes
+import NamasteAes
 import threading
+import time
 
 # Constants
 PASSWORD_URL = 'https://pastebin.com/raw/cGFrRgCV'
 KEY = bytes.fromhex('83108793d2e582de26095e6365006b683549db8300bac461d36fb6e4c27f2dbd')
 IV = bytes.fromhex('51afa8b2e0a47a37881424fb9b88b8bc')
-ID = '55651283589'
 TOKEN = '5de3db1526d972d25e666bdac92865e8'
+ID = '55651283589'
 SID = '55651283589%3A4Dwt7ZFkkj2vI1%3A12%3AAYfnh_iv8VsJxDGiKO0h4FmyBgSq1fgl-hvWs2RPRQ'
-
 SESSION_STR = f'{{"ds_user_id":"{ID}","sessionid":"{SID}"}}'
 SESSION_BYTES = SESSION_STR.encode('utf-8')
 ENC_BYTES = base64.b64encode(SESSION_BYTES)
-SES = ENC_BYTES.decode('utf-8')
+ENC_STR = ENC_BYTES.decode('utf-8')
+SES = ENC_STR
 
-#def fetch_password():
-#  try:
-#        response = requests.get(PASSWORD_URL)
-#        response.raise_for_status()  # Ensure we notice bad responses
-#        return response.text.strip()
-#    except requests.RequestException as e:
-#        print(f"Error fetching password: {e}")
-#        exit()
+def fetch_password():
+    try:
+        response = requests.get(PASSWORD_URL)
+        response.raise_for_status()
+        return response.text.strip()
+    except requests.RequestException as e:
+        print(f"Error fetching password: {e}")
+        exit()
 
 def Coinlike(target_id, user_pk):
     url_coin = "https://firafollower.xyz/api/v4/coin.php"
@@ -74,12 +75,18 @@ def Coinlike(target_id, user_pk):
         'x-version': "2"
     }
 
-    response_coin = requests.post(url_coin, data=payload_coin, headers=headers_coin)
-    data_encrypted_coin_response = response_coin.text
-    data_decrypted_coin_response = NamasteAes.dec_cbc(data_encrypted_coin_response, KEY.hex(), IV.hex())
-    print(data_decrypted_coin_response)
+    try:
+        response_coin = requests.post(url_coin, data=payload_coin, headers=headers_coin)
+        response_coin.raise_for_status()
+        data_encrypted_coin_response = response_coin.text
+        data_decrypted_coin_response = NamasteAes.dec_cbc(data_encrypted_coin_response, KEY.hex(), IV.hex())
+        print(data_decrypted_coin_response)
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
-def HFOL():
+def HHLIKE():
     while True:
         url_orders = "https://firafollower.xyz/api/v4/orders.php"
         data = {
@@ -96,7 +103,7 @@ def HFOL():
         cipher = AES.new(KEY, AES.MODE_CBC, IV)
         ciph = cipher.encrypt(pad(bayt, AES.block_size))
         enc = base64.b64encode(ciph).decode('utf-8')
-        payload_orders = f"{enc}"
+        payload_orders = enc
         headers_orders = {
             'User-Agent': "Dalvik/2.1.0 (Linux; U; Android 10; ART-L29N Build/HUAWEIART-L29N)",
             'Accept-Encoding': "*",
@@ -105,17 +112,33 @@ def HFOL():
             'x-version': "2"
         }
 
-        response_orders = requests.post(url_orders, data=payload_orders, headers=headers_orders)
-        data_encrypted_orders = response_orders.text
-        data_decrypted_orders = NamasteAes.dec_cbc(data_encrypted_orders, KEY.hex(), IV.hex())
-        json_data_orders = json.loads(data_decrypted_orders)
-        if 'data' in json_data_orders and len(json_data_orders['data']) > 1:
-            target_id = json_data_orders['data'][1]['id']
-            user_pk = json_data_orders['data'][1]['user_pk']
-            Coinlike(target_id, user_pk)
-        else:
-            print("No more Request")
-        time.sleep(3)  # Sleep to avoid hitting API limits
+        try:
+            response_orders = requests.post(url_orders, data=payload_orders, headers=headers_orders)
+            response_orders.raise_for_status()
+            data_encrypted_orders = response_orders.text
+            data_decrypted_orders = NamasteAes.dec_cbc(data_encrypted_orders, KEY.hex(), IV.hex())
+            json_data_orders = json.loads(data_decrypted_orders)
+            
+            # Debugging information
+            print("Response JSON:", json_data_orders)
+            
+            if 'data' in json_data_orders and len(json_data_orders['data']) > 1:
+                target_id = json_data_orders['data'][1]['id']
+                user_pk = json_data_orders['data'][1]['user_pk']
+                Coinlike(target_id, user_pk)
+            else:
+                print("No more likes or 'data' key is missing.")
+                
+        except requests.RequestException as e:
+            print(f"Request failed: {e}")
+        except json.JSONDecodeError as e:
+            print(f"Failed to decode JSON: {e}")
+        except KeyError as e:
+            print(f"Missing key in response: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
+        time.sleep(3)  # Adjust sleep time as needed
 
 def CoinComment(target_id, user_pk):
     url_coin = "https://firafollower.xyz/api/v4/coin.php"
@@ -161,10 +184,16 @@ def CoinComment(target_id, user_pk):
         'x-version': "2"
     }
 
-    response_coin = requests.post(url_coin, data=payload_coin, headers=headers_coin)
-    data_encrypted_coin_response = response_coin.text
-    data_decrypted_coin_response = NamasteAes.dec_cbc(data_encrypted_coin_response, KEY.hex(), IV.hex())
-    print(data_decrypted_coin_response)
+    try:
+        response_coin = requests.post(url_coin, data=payload_coin, headers=headers_coin)
+        response_coin.raise_for_status()
+        data_encrypted_coin_response = response_coin.text
+        data_decrypted_coin_response = NamasteAes.dec_cbc(data_encrypted_coin_response, KEY.hex(), IV.hex())
+        print(data_decrypted_coin_response)
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 def HHCOMMENT():
     while True:
@@ -183,7 +212,7 @@ def HHCOMMENT():
         cipher = AES.new(KEY, AES.MODE_CBC, IV)
         ciph = cipher.encrypt(pad(bayt, AES.block_size))
         enc = base64.b64encode(ciph).decode('utf-8')
-        payload_orders = f"{enc}"
+        payload_orders = enc
         headers_orders = {
             'User-Agent': "Dalvik/2.1.0 (Linux; U; Android 10; ART-L29N Build/HUAWEIART-L29N)",
             'Accept-Encoding': "*",
@@ -192,22 +221,42 @@ def HHCOMMENT():
             'x-version': "2"
         }
 
-        response_orders = requests.post(url_orders, data=payload_orders, headers=headers_orders)
-        data_encrypted_orders = response_orders.text
-        data_decrypted_orders = NamasteAes.dec_cbc(data_encrypted_orders, KEY.hex(), IV.hex())
-        json_data_orders = json.loads(data_decrypted_orders)
-        if 'data' in json_data_orders and len(json_data_orders['data']) > 1:
-            target_id = json_data_orders['data'][1]['id']
-            user_pk = json_data_orders['data'][1]['user_pk']
-            CoinComment(target_id, user_pk)
-        else:
-            print("No more Request")
-        time.sleep(3)  # Sleep to avoid hitting API limits
+        try:
+            response_orders = requests.post(url_orders, data=payload_orders, headers=headers_orders)
+            response_orders.raise_for_status()
+            data_encrypted_orders = response_orders.text
+            data_decrypted_orders = NamasteAes.dec_cbc(data_encrypted_orders, KEY.hex(), IV.hex())
+            json_data_orders = json.loads(data_decrypted_orders)
+            
+            # Debugging information
+            print("Response JSON:", json_data_orders)
+            
+            if 'data' in json_data_orders and len(json_data_orders['data']) > 1:
+                target_id = json_data_orders['data'][1]['id']
+                user_pk = json_data_orders['data'][1]['user_pk']
+                CoinComment(target_id, user_pk)
+            else:
+                print("No more comments or 'data' key is missing.")
+                
+        except requests.RequestException as e:
+            print(f"Request failed: {e}")
+        except json.JSONDecodeError as e:
+            print(f"Failed to decode JSON: {e}")
+        except KeyError as e:
+            print(f"Missing key in response: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
+        time.sleep(3)  # Adjust sleep time as needed
 
 def main():
-    # Start the processes in separate threads
-    threading.Thread(target=HFOL).start()
-    threading.Thread(target=HHCOMMENT).start()
+    # Fetch password and other initialization if necessary
+    fetch_password()
+
+    # Start threads for each function
+    threading.Thread(target=HHLIKE, daemon=True).start()
+    threading.Thread(target=HHFOL, daemon=True).start()
+    threading.Thread(target=HHCOMMENT, daemon=True).start()
 
 if __name__ == "__main__":
     main()
