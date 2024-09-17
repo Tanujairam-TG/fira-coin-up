@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: my-script
+    name: fira-coin-up
     env: python
-    buildCommand: "pip install requests pycryptodome NamasteAes"
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "python main.py"
