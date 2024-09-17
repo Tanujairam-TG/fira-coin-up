@@ -3,6 +3,7 @@ import json
 import webbrowser
 import time
 from NamasteAes import NamasteAes
+from config import encrypted_data
 
 def decrypt_and_extract(data, key, iv):
     decrypted_data = NamasteAes.dec_cbc(data, key, iv)
