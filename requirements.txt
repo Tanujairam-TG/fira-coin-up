@@ -1,3 +1,5 @@
-pycrypto
 requests
+pycrypto
+pycryptodomex
 pycryptodome
+NamasteAes
