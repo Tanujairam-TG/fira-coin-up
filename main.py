@@ -7,15 +7,15 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 import threading
 from NamasteAes import NamasteAes
-
+from config import SESSION_ID, USER_TOKEN, USER_PK
 # Constants
 KEY = bytes.fromhex('83108793d2e582de26095e6365006b683549db8300bac461d36fb6e4c27f2dbd')
 IV = bytes.fromhex('51afa8b2e0a47a37881424fb9b88b8bc')
 
 # User credentials (for demonstration purposes; in practice, keep sensitive data secure)
-id = '55651283589'
-token = '5de3db1526d972d25e666bdac92865e8'
-sid = '55651283589%3A4Dwt7ZFkkj2vI1%3A12%3AAYfnh_iv8VsJxDGiKO0h4FmyBgSq1fgl-hvWs2RPRQ'
+id = USER_PK
+token = USER_TOKEN
+sid = USER_PK
 
 session_str = f'{{"ds_user_id":"{id}","sessionid":"{sid}"}}'
 session_bytes = session_str.encode('utf-8')
