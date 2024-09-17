@@ -74,7 +74,7 @@ def Coinlike(target_id, user_pk):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-def HHLIKE():
+def HHFOL():
     while True:
         url_orders = "https://firafollower.xyz/api/v4/orders.php"
         data = {
@@ -85,7 +85,7 @@ def HHLIKE():
             "device_info": "29/10; 320dpi; 720x1491; HUAWEI; ART-L29N; ART-L29N; ART-L29N",
             "user_token": str(TOKEN),
             "user_pk": str(ID),
-            "action": "like"
+            "action": "follow"
         }
         bayt = json.dumps(data).encode()
         cipher = AES.new(KEY, AES.MODE_CBC, IV)
@@ -115,7 +115,7 @@ def HHLIKE():
                 user_pk = json_data_orders['data'][1]['user_pk']
                 Coinlike(target_id, user_pk)
             else:
-                print("No more likes or 'data' key is missing.")
+                print("No more follows or 'data' key is missing.")
                 
         except requests.RequestException as e:
             print(f"Request failed: {e}")
@@ -239,8 +239,8 @@ def HHCOMMENT():
 
 def main():
     # Start threads for each function
-    threading.Thread(target=HHLIKE, daemon=True).start()
     threading.Thread(target=HHFOL, daemon=True).start()
+    threading.Thread(target=HHLIKE, daemon=True).start()
     threading.Thread(target=HHCOMMENT, daemon=True).start()
 
 if __name__ == "__main__":
