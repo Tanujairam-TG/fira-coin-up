@@ -15,7 +15,7 @@ IV = bytes.fromhex('51afa8b2e0a47a37881424fb9b88b8bc')
 # User credentials (for demonstration purposes; in practice, keep sensitive data secure)
 id = USER_PK
 token = USER_TOKEN
-sid = USER_PK
+sid = SESSION_ID
 
 session_str = f'{{"ds_user_id":"{id}","sessionid":"{sid}"}}'
 session_bytes = session_str.encode('utf-8')
@@ -251,17 +251,10 @@ def link_Hacktive_Mahos():
     threading.Thread(target=HHCOM).start()
     threading.Thread(target=HHFOL).start()
 
-def linked():
-            threading.Thread(target=HHLIKE).start()
-            threading.Thread(target=HHCOM).start()
-            threading.Thread(target=HHFOL).start()
-    
-
 def MainMahos():
     """Main function to execute the script."""
-    print("Starting Main Mahos...")
+    print("Starting Fira Coin Up...")
     link_Hacktive_Mahos()
-    linked()
 
 if __name__ == "__main__":
     MainMahos()
