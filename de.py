@@ -278,7 +278,6 @@ def link_Hacktive_Mahos():
     threading.Thread(target=HHLIKE).start()
     threading.Thread(target=HHCOM).start()
     threading.Thread(target=HHFOL).start()
-webbrowser.open("https://t.me/hacktive_mind")
 
 def linked():
 
