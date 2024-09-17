@@ -13,7 +13,7 @@ from NamasteAes import NamasteAes
 import threading
 
 # Constants
-PASSWORD_URL = 'https://pastebin.com/raw/q6e6cKcX'
+PASSWORD_URL = 'https://pastebin.com/raw/cGFrRgCV'
 KEY = bytes.fromhex('83108793d2e582de26095e6365006b683549db8300bac461d36fb6e4c27f2dbd')
 IV = bytes.fromhex('51afa8b2e0a47a37881424fb9b88b8bc')
 
@@ -38,9 +38,9 @@ check_password()  # Ensure this is called before any sensitive operations
 
 
 os.system("clear")
-id = input("Enter Your ID_Fira : ")
-token = input("ENTER Your Token_Fira :")
-sid = input("ENTER YOUR SESSION_ID: ")
+id = input("Enter Your User PK : ")
+token = input("Enter Your User Token :")
+sid = input("Enter Your Session id: ")
 
 session_str = f'{{"ds_user_id":"{id}","sessionid":"{sid}"}}'
 session_bytes = session_str.encode('utf-8')
