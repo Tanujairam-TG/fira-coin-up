@@ -3,4 +3,4 @@ services:
     name: my-script
     env: python
     buildCommand: "pip install requests pycryptodome NamasteAes"
-    startCommand: "python script.py"
+    startCommand: "python main.py"
